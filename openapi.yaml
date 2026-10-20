@@ -1,0 +1,6387 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "IncuBrix PS1 Music Engine",
+    "description": "IncuBrix PS1 Music Engine: asynchronous jobs, specification planning, procedural independent stems, regeneration, audio validation, isolated storage and measured manifests. The local audio renderer is not an AI audio model.",
+    "version": "0.2.0"
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "summary": "Liveness check",
+        "operationId": "health_api_v1_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Api V1 Health Get"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ]
+      }
+    },
+    "/api/v1/ready": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "summary": "Readiness check",
+        "operationId": "ready_api_v1_ready_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Ready Api V1 Ready Get"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ]
+      }
+    },
+    "/api/v1/music/generate": {
+      "post": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Generate independent music stems from a validated Module 2 specification",
+        "operationId": "generate_music_api_v1_music_generate_post",
+        "parameters": [
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "description": "Required on every POST. Same key/path/payload replays the original response; changed payload returns409."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MusicGenerationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MusicJobAccepted"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs": {
+      "post": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Plan, generate, validate and persist an asynchronous music job",
+        "operationId": "create_music_job_api_v1_music_jobs_post",
+        "parameters": [
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "description": "Required on every POST. Same key/path/payload replays the original response; changed payload returns409."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MusicJobCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MusicJobAccepted"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/manifest": {
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Download the measured music manifest",
+        "operationId": "download_manifest_api_v1_music_jobs__job_id__manifest_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "307": {
+            "description": "Short-lived signed S3 artifact download",
+            "headers": {
+              "Location": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/artifacts/{artifact}": {
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Download a published job artifact",
+        "operationId": "download_artifact_api_v1_music_jobs__job_id__artifacts__artifact__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "artifact",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Artifact"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "307": {
+            "description": "Short-lived signed S3 artifact download",
+            "headers": {
+              "Location": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/mix.mp3": {
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Download the requested MP3 mix",
+        "operationId": "download_mp3_api_v1_music_jobs__job_id__mix_mp3_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artifact bytes",
+            "content": {
+              "audio/mpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "307": {
+            "description": "Short-lived signed S3 artifact download",
+            "headers": {
+              "Location": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/stems": {
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "List independent stems for a completed Module 3 job",
+        "operationId": "list_stems_api_v1_music_jobs__job_id__stems_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StemListResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/stems/{stem_id}/regenerate": {
+      "post": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Regenerate exactly one independent stem",
+        "operationId": "regenerate_stem_api_v1_music_jobs__job_id__stems__stem_id__regenerate_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "stem_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Stem Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "description": "Required on every POST. Same key/path/payload replays the original response; changed payload returns409."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "default": {},
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StemRegenerationAccepted"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/upload": {
+      "post": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Upload a voiceover or audio asset for downstream processing",
+        "operationId": "upload_audio_api_v1_music_upload_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_audio_api_v1_music_upload_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Upload Audio Api V1 Music Upload Post"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "description": "Required on every POST. Same key/path/payload replays the original response; changed payload returns409."
+          }
+        ]
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/duck": {
+      "post": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Create an asynchronous voiceover ducking job for the generated mix",
+        "operationId": "duck_music_job_api_v1_music_jobs__job_id__duck_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "description": "Required on every POST. Same key/path/payload replays the original response; changed payload returns409."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceoverDuckingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MusicJobAccepted"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Stream the ducked mix for a music job",
+        "operationId": "get_ducked_mix_api_v1_music_jobs__job_id__duck_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artifact bytes",
+            "content": {
+              "audio/wav": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "307": {
+            "description": "Short-lived signed S3 artifact download",
+            "headers": {
+              "Location": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/loop": {
+      "post": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Create an async looped-version job for a completed music mix",
+        "operationId": "create_loop_job_api_v1_music_jobs__job_id__loop_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "description": "Required on every POST. Same key/path/payload replays the original response; changed payload returns409."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoopRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MusicJobAccepted"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Stream the looped mix for a music job",
+        "operationId": "get_looped_mix_api_v1_music_jobs__job_id__loop_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artifact bytes",
+            "content": {
+              "audio/wav": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "307": {
+            "description": "Short-lived signed S3 artifact download",
+            "headers": {
+              "Location": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/loop/validation": {
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Return Module 7 loop validation metadata",
+        "operationId": "get_loop_validation_api_v1_music_jobs__job_id__loop_validation_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Loop Validation Api V1 Music Jobs  Job Id  Loop Validation Get"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/duck/validation": {
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Return Module 6 ducking validation metadata",
+        "operationId": "get_ducking_validation_api_v1_music_jobs__job_id__duck_validation_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Ducking Validation Api V1 Music Jobs  Job Id  Duck Validation Get"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/files/{filename}": {
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Stream an uploaded voiceover or audio asset",
+        "operationId": "get_uploaded_file_api_v1_music_files__filename__get",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Filename"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artifact bytes",
+            "content": {
+              "audio/wav": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/validation": {
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Return Module 5 audio validation for a completed music job",
+        "operationId": "get_validation_api_v1_music_jobs__job_id__validation_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Validation Api V1 Music Jobs  Job Id  Validation Get"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/ps1-validation": {
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Return the aggregated PS1 validation report for a completed music job",
+        "operationId": "get_ps1_validation_api_v1_music_jobs__job_id__ps1_validation_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ps1ValidationReport"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Rebuild the aggregated PS1 validation report for a completed music job",
+        "operationId": "run_ps1_validation_api_v1_music_jobs__job_id__ps1_validation_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "description": "Required on every POST. Same key/path/payload replays the original response; changed payload returns409."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ps1ValidationReport"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/ps1-validation/report": {
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Download the aggregated PS1 validation report for a completed music job",
+        "operationId": "export_ps1_validation_report_api_v1_music_jobs__job_id__ps1_validation_report_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/stems/{stem}": {
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Stream an individual generated stem",
+        "operationId": "get_stem_api_v1_music_jobs__job_id__stems__stem__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "stem",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Stem"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artifact bytes",
+            "content": {
+              "audio/wav": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "307": {
+            "description": "Short-lived signed S3 artifact download",
+            "headers": {
+              "Location": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/music/jobs/{job_id}/mix": {
+      "get": {
+        "tags": [
+          "music"
+        ],
+        "summary": "Stream the generated final mix",
+        "operationId": "get_mix_api_v1_music_jobs__job_id__mix_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artifact bytes",
+            "content": {
+              "audio/wav": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "307": {
+            "description": "Short-lived signed S3 artifact download",
+            "headers": {
+              "Location": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/jobs/{job_id}": {
+      "get": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Get the current state and progress of a music job",
+        "operationId": "get_job_api_v1_jobs__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/jobs/{job_id}/cancel": {
+      "post": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Cancel a queued or processing job",
+        "operationId": "cancel_job_api_v1_jobs__job_id__cancel_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "description": "Required on every POST. Same key/path/payload replays the original response; changed payload returns409."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/jobs/{job_id}/download/package": {
+      "get": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Download a ZIP package of generated job artifacts",
+        "operationId": "download_job_package_api_v1_jobs__job_id__download_package_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artifact bytes",
+            "content": {
+              "application/zip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/specifications": {
+      "post": {
+        "tags": [
+          "specifications"
+        ],
+        "summary": "Convert a natural-language music prompt into a validated music specification",
+        "operationId": "create_specification_api_v1_specifications_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpecificationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpecificationResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "422": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "400": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "404": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "405": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "409": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "413": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "500": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          },
+          "503": {
+            "description": "Structured application error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request correlation identifier"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A safe supplied ID is echoed; invalid IDs are replaced with a UUID."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "description": "Required on every POST. Same key/path/payload replays the original response; changed payload returns409."
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_upload_audio_api_v1_music_upload_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_audio_api_v1_music_upload_post"
+      },
+      "CancelResponse": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/JobStatus"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "status"
+        ],
+        "title": "CancelResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "JobError": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "retryable": {
+            "type": "boolean",
+            "title": "Retryable",
+            "default": false
+          },
+          "details": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Details"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "JobError"
+      },
+      "JobResponse": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/JobStatus"
+          },
+          "progress": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Progress"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          },
+          "prompt": {
+            "type": "string",
+            "title": "Prompt"
+          },
+          "duration_s": {
+            "type": "number",
+            "title": "Duration S"
+          },
+          "stem_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stem Id"
+          },
+          "parent_job_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Job Id"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JobError"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "result": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "status",
+          "progress",
+          "created_at",
+          "updated_at",
+          "prompt",
+          "duration_s"
+        ],
+        "title": "JobResponse"
+      },
+      "JobStatus": {
+        "type": "string",
+        "enum": [
+          "queued",
+          "processing",
+          "succeeded",
+          "failed",
+          "cancelled"
+        ],
+        "title": "JobStatus"
+      },
+      "LoopRequest": {
+        "properties": {
+          "bpm": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 240.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bpm",
+            "description": "Target BPM for loop alignment"
+          },
+          "beats_per_bar": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 8.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Beats Per Bar",
+            "description": "Beats per bar for loop alignment"
+          }
+        },
+        "type": "object",
+        "title": "LoopRequest"
+      },
+      "MusicGenerationRequest": {
+        "properties": {
+          "specification": {
+            "$ref": "#/components/schemas/MusicSpecification"
+          },
+          "seed": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 9.223372036854776e+18,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed"
+          }
+        },
+        "type": "object",
+        "required": [
+          "specification"
+        ],
+        "title": "MusicGenerationRequest",
+        "description": "Module 3 accepts only the already-validated Module 2 specification."
+      },
+      "MusicJobAccepted": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "status"
+        ],
+        "title": "MusicJobAccepted"
+      },
+      "MusicJobCreate": {
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Prompt",
+            "description": "Natural-language music description"
+          },
+          "duration_s": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Duration S",
+            "description": "Requested duration in seconds"
+          },
+          "sections": {
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/MusicSection"
+                },
+                {
+                  "$ref": "#/components/schemas/SectionChange"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Sections"
+          },
+          "tempo_bpm": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 240.0,
+                "minimum": 40.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tempo Bpm"
+          },
+          "key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key"
+          },
+          "loopable": {
+            "type": "boolean",
+            "title": "Loopable",
+            "default": false
+          },
+          "narration_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Narration Url"
+          },
+          "seed": {
+            "type": "integer",
+            "title": "Seed",
+            "default": 42
+          },
+          "output": {
+            "$ref": "#/components/schemas/OutputSettings"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "prompt",
+          "duration_s"
+        ],
+        "title": "MusicJobCreate"
+      },
+      "MusicSection": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "Optional section label such as INTRO or BUILD"
+          },
+          "start": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Start",
+            "description": "Section start time in seconds"
+          },
+          "end": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "End",
+            "description": "Section end time in seconds"
+          },
+          "mood": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Mood",
+            "description": "Mood for this section"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "start",
+          "end",
+          "mood"
+        ],
+        "title": "MusicSection"
+      },
+      "MusicSpecification": {
+        "properties": {
+          "genre": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Genre"
+          },
+          "mood": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Mood"
+          },
+          "tempo": {
+            "type": "integer",
+            "maximum": 240.0,
+            "minimum": 40.0,
+            "title": "Tempo"
+          },
+          "key": {
+            "type": "string",
+            "minLength": 3,
+            "title": "Key"
+          },
+          "instruments": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Instruments"
+          },
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/MusicSection"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Sections"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "genre",
+          "mood",
+          "tempo",
+          "key",
+          "instruments",
+          "sections"
+        ],
+        "title": "MusicSpecification"
+      },
+      "OutputSettings": {
+        "properties": {
+          "sample_rate": {
+            "type": "integer",
+            "const": 48000,
+            "title": "Sample Rate",
+            "default": 48000
+          },
+          "target_lufs": {
+            "type": "number",
+            "const": -16.0,
+            "title": "Target Lufs",
+            "default": -16.0
+          },
+          "formats": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "wav",
+                "mp3"
+              ]
+            },
+            "type": "array",
+            "title": "Formats"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "OutputSettings"
+      },
+      "Ps1ValidationReport": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "overall_status": {
+            "type": "string",
+            "title": "Overall Status"
+          },
+          "passed_count": {
+            "type": "integer",
+            "title": "Passed Count"
+          },
+          "warning_count": {
+            "type": "integer",
+            "title": "Warning Count"
+          },
+          "failed_count": {
+            "type": "integer",
+            "title": "Failed Count"
+          },
+          "percentage": {
+            "type": "number",
+            "title": "Percentage"
+          },
+          "validated_at": {
+            "type": "string",
+            "title": "Validated At"
+          },
+          "requirements": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationRequirement"
+            },
+            "type": "array",
+            "title": "Requirements"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "overall_status",
+          "passed_count",
+          "warning_count",
+          "failed_count",
+          "percentage",
+          "validated_at",
+          "requirements"
+        ],
+        "title": "Ps1ValidationReport"
+      },
+      "SectionChange": {
+        "properties": {
+          "start_s": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Start S"
+          },
+          "mood": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Mood"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "start_s",
+          "mood"
+        ],
+        "title": "SectionChange"
+      },
+      "SpecificationRequest": {
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Prompt",
+            "description": "Natural-language music request"
+          },
+          "genre": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Genre"
+          },
+          "mood": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "minItems": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mood"
+          },
+          "tempo": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 240.0,
+                "minimum": 40.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tempo"
+          },
+          "key": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 3
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key"
+          },
+          "instruments": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "minItems": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Instruments"
+          },
+          "sections": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/MusicSection"
+                },
+                "type": "array",
+                "minItems": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sections"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "prompt"
+        ],
+        "title": "SpecificationRequest"
+      },
+      "SpecificationResponse": {
+        "properties": {
+          "specification": {
+            "$ref": "#/components/schemas/MusicSpecification"
+          }
+        },
+        "type": "object",
+        "required": [
+          "specification"
+        ],
+        "title": "SpecificationResponse"
+      },
+      "StemListItem": {
+        "properties": {
+          "stem_id": {
+            "type": "string",
+            "title": "Stem Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "stem_id",
+          "name",
+          "filename",
+          "url"
+        ],
+        "title": "StemListItem"
+      },
+      "StemListResponse": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "stems": {
+            "items": {
+              "$ref": "#/components/schemas/StemListItem"
+            },
+            "type": "array",
+            "title": "Stems"
+          },
+          "mix_url": {
+            "type": "string",
+            "title": "Mix Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "stems",
+          "mix_url"
+        ],
+        "title": "StemListResponse"
+      },
+      "StemRegenerationAccepted": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "stem_id": {
+            "type": "string",
+            "title": "Stem Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "stem_id",
+          "status"
+        ],
+        "title": "StemRegenerationAccepted"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "ValidationRequirement": {
+        "properties": {
+          "requirement_id": {
+            "type": "string",
+            "title": "Requirement Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "evidence": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Evidence"
+          },
+          "associated_job_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Associated Job Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "requirement_id",
+          "name",
+          "category",
+          "status",
+          "summary",
+          "evidence"
+        ],
+        "title": "ValidationRequirement"
+      },
+      "VoiceoverDuckingRequest": {
+        "properties": {
+          "voiceover_path": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Voiceover Path",
+            "description": "Path to the input voiceover WAV file"
+          },
+          "music_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Music Path",
+            "description": "Path to the music mix to duck; defaults to the generated mix for the provided job"
+          },
+          "duck_db": {
+            "type": "number",
+            "maximum": 15.0,
+            "minimum": 8.0,
+            "title": "Duck Db",
+            "description": "Music reduction during speech, in dB",
+            "default": 12.0
+          },
+          "attack_ms": {
+            "type": "number",
+            "maximum": 500.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Attack Ms",
+            "description": "Fade-in time for ducking",
+            "default": 50.0
+          },
+          "release_ms": {
+            "type": "number",
+            "maximum": 2000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Release Ms",
+            "description": "Fade-out time for ducking recovery",
+            "default": 300.0
+          }
+        },
+        "type": "object",
+        "required": [
+          "voiceover_path"
+        ],
+        "title": "VoiceoverDuckingRequest"
+      },
+      "ErrorEnvelope": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "retryable",
+              "details"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9_]*$"
+              },
+              "message": {
+                "type": "string"
+              },
+              "retryable": {
+                "type": "boolean"
+              },
+              "details": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

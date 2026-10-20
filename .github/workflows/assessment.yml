@@ -1,0 +1,32 @@
+name: Assessment Verification
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      LLM_PROVIDER: mock
+      LLM_API_KEY: ''
+      HF_API_KEY: ''
+      OLLAMA_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: python -m pip install -r backend/requirements-test.txt
+      - run: npm install
+      - run: python -m pytest -q --junitxml=test_results/ci-pytest.xml
+      - run: npm test
+      - run: npm run build
+      - run: docker compose --profile test run --build --rm tests
+      - run: python scripts/batch_runner.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: assessment-evidence
+          path: test_results/
+          retention-days: 14

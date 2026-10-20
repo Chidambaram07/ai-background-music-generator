@@ -1,0 +1,17 @@
+[
+  {"test_id":"prompt-cinematic","request":{"prompt":"Cinematic orchestral background, peaceful then hopeful","duration_s":10}},
+  {"test_id":"prompt-lofi","request":{"prompt":"Lo-fi relaxed study beat with soft piano","duration_s":10}},
+  {"test_id":"prompt-corporate","request":{"prompt":"Corporate product launch, bright and confident","duration_s":10}},
+  {"test_id":"prompt-electronic","request":{"prompt":"Electronic energetic technology pulse","duration_s":10}},
+  {"test_id":"prompt-acoustic","request":{"prompt":"Acoustic gentle organic instrumental background","duration_s":10}},
+  {"test_id":"prompt-tense","request":{"prompt":"Tense dark suspense background","duration_s":10}},
+  {"test_id":"prompt-playful","request":{"prompt":"Playful cheerful bouncy instrumental music","duration_s":10}},
+  {"test_id":"prompt-documentary","request":{"prompt":"Nature documentary calm wide landscape","duration_s":10}},
+  {"test_id":"prompt-inspirational","request":{"prompt":"Inspirational hopeful uplifting background","duration_s":10}},
+  {"test_id":"prompt-ambient","request":{"prompt":"Ambient peaceful sparse atmospheric music","duration_s":10}},
+  {"test_id":"hard-vague","request":{"prompt":"nice music","duration_s":6}},
+  {"test_id":"hard-contradictory","request":{"prompt":"calm but aggressive","duration_s":6}},
+  {"test_id":"hard-song","request":{"prompt":"make it exactly like Yesterday by The Beatles","duration_s":6}},
+  {"test_id":"hard-artist","request":{"prompt":"make music exactly like Taylor Swift","duration_s":6}},
+  {"test_id":"hard-vocals","request":{"prompt":"female singer singing an emotional song","duration_s":6}}
+]

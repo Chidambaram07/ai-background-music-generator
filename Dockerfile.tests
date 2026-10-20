@@ -1,0 +1,13 @@
+FROM node:24-bookworm-slim AS node
+FROM python:3.13-slim
+RUN apt-get update && apt-get install -y --no-install-recommends libstdc++6 && rm -rf /var/lib/apt/lists/*
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+WORKDIR /app
+COPY backend/requirements.txt backend/requirements-test.txt ./backend/
+RUN pip install --no-cache-dir -r backend/requirements-test.txt
+COPY package.json package-lock.json ./
+COPY --from=node /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/npm
+RUN node /usr/local/lib/node_modules/npm/bin/npm-cli.js ci
+COPY . .
+ENV PYTHONPATH=/app/backend
+CMD ["python", "scripts/run_all_tests.py"]
