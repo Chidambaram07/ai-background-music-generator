@@ -7,9 +7,11 @@ services:
     branch: main
     dockerfilePath: ./Dockerfile.backend
     dockerContext: .
-    dockerCommand: sh -c 'exec uvicorn app.main:app --host 0.0.0.0 --port "${PORT:-10000}" --workers 1'
+    dockerCommand: uvicorn app.main:app --host 0.0.0.0 --port 10000 --workers 1
     healthCheckPath: /api/v1/ready
     envVars:
+      - key: PORT
+        value: "10000"
       - key: APP_ENV
         value: demo
       - key: AUDIO_PROVIDER

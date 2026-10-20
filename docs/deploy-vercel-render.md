@@ -18,7 +18,7 @@ These are requested names, not reserved or verified live URLs. If either platfor
 5. Wait for the image build and `/api/v1/ready` health check. Record the actual assigned backend URL.
 6. Open `<actual-backend-url>/api/v1/health`, `<actual-backend-url>/api/v1/ready`, and `<actual-backend-url>/docs`.
 
-If creating manually, use the repository root, Dockerfile `Dockerfile.backend`, health path `/api/v1/ready`, one worker and the environment settings in `render.yaml`. The Docker command binds to Render's `PORT` through a shell. Do not launch a separate worker instance; this application currently owns its worker in the web process.
+If creating manually, use the repository root, Dockerfile `Dockerfile.backend`, health path `/api/v1/ready`, one worker and the environment settings in `render.yaml`. The Docker command invokes Uvicorn directly on port10000, matching the explicit `PORT=10000` setting; it does not depend on shell quoting or variable expansion. Do not launch a separate worker instance; this application currently owns its worker in the web process.
 
 The free configuration sets `AUDIO_PROVIDER=procedural`, `LLM_PROVIDER=mock`, and `STORAGE_BACKEND=local`. No Hugging Face, MusicGen, paid LLM or S3 key is required. SQLite and generated audio live under `/tmp/incubrix` and can disappear when the service sleeps, restarts or redeploys.
 
