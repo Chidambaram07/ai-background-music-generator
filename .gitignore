@@ -30,3 +30,4 @@ test_results/
 *.key
 *.pfx
 *.p12
+.vercel
