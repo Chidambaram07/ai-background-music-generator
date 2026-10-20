@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: incubrix-music-api
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    dockerfilePath: ./Dockerfile.backend
+    dockerContext: .
+    dockerCommand: sh -c 'exec uvicorn app.main:app --host 0.0.0.0 --port "${PORT:-10000}" --workers 1'
+    healthCheckPath: /api/v1/ready
+    envVars:
+      - key: APP_ENV
+        value: demo
+      - key: AUDIO_PROVIDER
+        value: procedural
+      - key: LLM_PROVIDER
+        value: mock
+      - key: STORAGE_BACKEND
+        value: local
+      - key: DATABASE_PATH
+        value: /tmp/incubrix/data/jobs.db
+      - key: AUDIO_OUTPUT_DIR
+        value: /tmp/incubrix/outputs
+      - key: AUDIO_MODEL_CACHE_DIR
+        value: /tmp/incubrix/models
+      - key: FRONTEND_ORIGINS
+        value: https://incubrix-music-engine.vercel.app
+      - key: NARRATION_ALLOW_HTTP
+        value: "false"
+      - key: OPENBLAS_NUM_THREADS
+        value: "1"
+      - key: OMP_NUM_THREADS
+        value: "1"
+      - key: MKL_NUM_THREADS
+        value: "1"
